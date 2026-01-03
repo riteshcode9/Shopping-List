@@ -2,6 +2,8 @@ const itemForm = document.getElementById('item-form');
 const itemList = document.getElementById('item-list');
 const itemInput = document.getElementById('item-input');
 const clearButton = document.getElementById('clear');
+const filterInput = document.getElementById('filter');
+const items = document.querySelectorAll('li');
 
 
 function addItem(event) {
@@ -17,7 +19,9 @@ function addItem(event) {
 
     const button = createButton('remove-item btn-link text-red');
     listItem.appendChild(button);
+    //Add li to the DOM
     itemList.appendChild(listItem);
+    checkUI();
     itemInput.value = '';
 }
 
@@ -38,7 +42,11 @@ function createIcon(classes) {
 function removeItem(e) {
     //event delegation
     if(e.target.parentElement.classList.contains('remove-item')) {
-        e.target.parentElement.parentElement.remove();
+        if(confirm('Are you sure?')){
+            e.target.parentElement.parentElement.remove();
+            checkUI();
+        }
+        
     }   
 }
 
@@ -46,9 +54,23 @@ function clearItems() {
     while(itemList.firstChild) {
         itemList.removeChild(itemList.firstChild);
     }  
+    checkUI();
 }
 
-//Event listener for form submission
+function checkUI() {
+    const items = document.querySelectorAll('li');
+    if(items.length === 0) {
+        clearButton.style.display = 'none';
+        filterInput.style.display = 'none';
+    } else {
+        clearButton.style.display = 'block';
+        filterInput.style.display = 'block';
+    }   
+}
+
+//Event listener
 itemForm.addEventListener('submit', addItem);
 itemList.addEventListener('click', removeItem);
 clearButton.addEventListener('click', clearItems);
+
+checkUI();
