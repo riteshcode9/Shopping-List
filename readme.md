@@ -1,3 +1,4 @@
+https://capable-dolphin-bbc35a.netlify.app/
 # Shopping List
 
 Simple shopping list app using vanilla JS
