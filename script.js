@@ -33,6 +33,12 @@ function onAddItemSubmit(event) {
         isEditMode = false;
         formBtn.innerHTML = '<i class="fa-solid fa-plus"></i> Add Item';
         formBtn.style.backgroundColor = '#333';
+    } else {
+        //check if item already exists
+        if(checkIfItemExists(newItem)) {
+            alert('That item already exists!');
+            return; 
+        }
     }
 
     // Add item to DOM
@@ -92,6 +98,11 @@ function onClickItem(e) {
     } else {
         setItemToEdit(e.target);
     }
+}
+
+function checkIfItemExists(item) {
+    const itemsFromStorage = getItemsFromStorage();
+    return itemsFromStorage.includes(item);
 }
 
 function setItemToEdit(item) {
